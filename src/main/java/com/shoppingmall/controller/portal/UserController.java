@@ -81,9 +81,9 @@ public class UserController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "get_user_info.do", method = RequestMethod.GET)
+    @RequestMapping(value = "get_user_logined_info.do", method = RequestMethod.GET)
     @ResponseBody
-    public ServerResponse<User> getUserInfo(HttpSession session) {
+    public ServerResponse<User> getUserLoginedInfo(HttpSession session) {
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if (user != null) {
             ServerResponse.createBySuccess(user);
