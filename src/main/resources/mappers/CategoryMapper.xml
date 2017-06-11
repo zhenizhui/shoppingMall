@@ -117,11 +117,12 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <select id="selectCatrgoryChildrenByParentId" resultMap="BaseResultMap" parameterType="int">
+  <select id="selectCategoryChildrenByParentId" resultMap="BaseResultMap" parameterType="int">
+    <!-- parent_id 是数据库的字段 -->
     SELECT
     <include refid="Base_Column_List" />
     from mmall_category
-    where parentId = #{parentId}
+    where parent_id = #{parentId}
   </select>
 
 </mapper>
