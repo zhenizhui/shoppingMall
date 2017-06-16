@@ -43,7 +43,7 @@
     </appender>
 
     <logger name="com.shoppingmall" additivity="false" level="INFO" >
-        <appender-ref ref="mmall" />
+        <appender-ref ref="shoppingmall" />
         <appender-ref ref="console"/>
     </logger>
 
