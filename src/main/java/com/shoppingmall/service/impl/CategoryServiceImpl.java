@@ -29,7 +29,7 @@ public class CategoryServiceImpl implements ICategoryService{
 
     public ServerResponse addCategory(String categoryName, Integer parentId) {
         if (parentId == null || StringUtils.isBlank(categoryName)) {
-            return ServerResponse.createByErrorMessage("添加品类参数所悟");
+            return ServerResponse.createByErrorMessage("添加品类参数错误");
         }
         Category category = new Category();
         category.setName(categoryName);
@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements ICategoryService{
 
     public ServerResponse updateCategory(Integer categoryId, String categoryName) {
         if (categoryId == null || StringUtils.isBlank(categoryName)) {
-            return ServerResponse.createByErrorMessage("更新品类参数所悟");
+            return ServerResponse.createByErrorMessage("更新品类参数错误");
         }
         Category category = new Category();
         category.setId(categoryId);
