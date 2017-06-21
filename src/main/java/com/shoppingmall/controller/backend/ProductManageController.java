@@ -71,6 +71,12 @@ public class ProductManageController {
         }
     }
 
+    /**
+     * 获取商品的详情
+     * @param session
+     * @param productId
+     * @return
+     */
     @RequestMapping("detail.do")
     @ResponseBody
     public ServerResponse getDetail(HttpSession session, Integer productId){
@@ -88,6 +94,13 @@ public class ProductManageController {
         }
     }
 
+    /**
+     * 后台商品列表的分页显示
+     * @param session
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
     @RequestMapping("list.do")
     @ResponseBody
     public ServerResponse getList(HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
