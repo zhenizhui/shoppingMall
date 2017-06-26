@@ -1,7 +1,17 @@
 package com.shoppingmall.controller.portal;
 
+import com.shoppingmall.common.Const;
+import com.shoppingmall.common.ResponseCode;
+import com.shoppingmall.common.ServerResponse;
+import com.shoppingmall.pojo.User;
+import com.shoppingmall.service.ICartService;
+import com.shoppingmall.vo.CartVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by zhenizhui on 2017/6/25.
@@ -10,5 +20,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/cart/")
 public class CartController {
 
+    @Autowired
+    private ICartService iCartService;
+
+    /**
+     * 添加商品到购物车
+     * @param session
+     * @param count
+     * @param productId
+     * @return
+     */
+    @RequestMapping("add.do")
+    @ResponseBody
+    public ServerResponse<CartVo> add(HttpSession session, Integer count, Integer productId){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user ==null){
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iCartService.add(user.getId(),productId,count);
+    }
 
 }
