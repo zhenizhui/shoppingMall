@@ -40,4 +40,21 @@ public class CartController {
         return iCartService.add(user.getId(),productId,count);
     }
 
+    /**
+     * 更新购物车中某件商品的数量
+     * @param session
+     * @param count
+     * @param productId
+     * @return
+     */
+    @RequestMapping("update.do")
+    @ResponseBody
+    public ServerResponse<CartVo> update(HttpSession session, Integer count, Integer productId){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user ==null){
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iCartService.update(user.getId(),productId,count);
+    }
+
 }
