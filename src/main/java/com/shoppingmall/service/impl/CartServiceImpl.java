@@ -55,8 +55,7 @@ public class CartServiceImpl implements ICartService{
             cartMapper.updateByPrimaryKeySelective(cart);
         }
 
-        CartVo cartVo = this.getCartVoLimit(userId);
-        return ServerResponse.createBySuccess(cartVo);
+        return this.list(userId);
     }
 
     private CartVo getCartVoLimit(Integer userId){
@@ -140,8 +139,7 @@ public class CartServiceImpl implements ICartService{
             cart.setQuantity(count);
         }
         cartMapper.updateByPrimaryKeySelective(cart);
-        CartVo cartVo = this.getCartVoLimit(userId);
-        return ServerResponse.createBySuccess(cartVo);
+        return this.list(userId);
     }
 
     public ServerResponse<CartVo> delete(Integer userId,String productIds){
@@ -150,8 +148,7 @@ public class CartServiceImpl implements ICartService{
             return ServerResponse.createByErrorCodeMsg(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
         cartMapper.deleteByUserIdProductIds(userId,productList);
-        CartVo cartVo = this.getCartVoLimit(userId);
-        return ServerResponse.createBySuccess(cartVo);
+        return this.list(userId);
     }
 
     public ServerResponse<CartVo> list (Integer userId){
