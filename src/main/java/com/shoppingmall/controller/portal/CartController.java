@@ -88,5 +88,20 @@ public class CartController {
         return iCartService.list(user.getId());
     }
 
+    /**
+     * 全选购物车中的商品
+     * @param session
+     * @return
+     */
+    @RequestMapping("select_all.do")
+    @ResponseBody
+    public ServerResponse<CartVo> selectAll(HttpSession session){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user ==null){
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iCartService.selectOrUnSelect(user.getId(),null,Const.Cart.CHECKED);
+    }
+
 
 }
