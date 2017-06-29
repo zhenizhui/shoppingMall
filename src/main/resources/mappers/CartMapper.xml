@@ -157,4 +157,9 @@
     </if>
   </update>
 
+  <select id="selectCartProductCount" parameterType="int" resultType="int">
+    <!-- 查出来的值有可能为空，空是不可能赋值给int类型的，要做处理 -->
+    select IFNULL(sum(quantity),0) as count from mmall_cart where user_id = #{userId}
+  </select>
+
 </mapper>
