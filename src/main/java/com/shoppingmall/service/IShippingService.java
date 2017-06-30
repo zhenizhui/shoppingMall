@@ -9,4 +9,6 @@ import com.shoppingmall.pojo.Shipping;
 public interface IShippingService {
 
     ServerResponse add(Integer userId, Shipping shipping);
+
+    ServerResponse<String> del(Integer userId,Integer shippingId);
 }

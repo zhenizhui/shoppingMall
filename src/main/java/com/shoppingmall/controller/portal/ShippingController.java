@@ -35,4 +35,14 @@ public class ShippingController {
         }
         return iShippingService.add(user.getId(),shipping);
     }
+
+    @RequestMapping("del.do")
+    @ResponseBody
+    public ServerResponse del(HttpSession session,Integer shippingId){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user ==null){
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iShippingService.del(user.getId(),shippingId);
+    }
 }
