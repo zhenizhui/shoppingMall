@@ -26,6 +26,12 @@ public class ShippingController {
     private IShippingService iShippingService;
 
 
+    /**
+     * 添加收货地址
+     * @param session
+     * @param shipping
+     * @return
+     */
     @RequestMapping("add.do")
     @ResponseBody
     public ServerResponse add(HttpSession session, Shipping shipping){
@@ -36,6 +42,12 @@ public class ShippingController {
         return iShippingService.add(user.getId(),shipping);
     }
 
+    /**
+     * 删除收货地址
+     * @param session
+     * @param shippingId
+     * @return
+     */
     @RequestMapping("del.do")
     @ResponseBody
     public ServerResponse del(HttpSession session,Integer shippingId){
@@ -44,5 +56,21 @@ public class ShippingController {
             return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.del(user.getId(),shippingId);
+    }
+
+    /**
+     * 更新收货地址
+     * @param session
+     * @param shipping
+     * @return
+     */
+    @RequestMapping("update.do")
+    @ResponseBody
+    public ServerResponse update(HttpSession session,Shipping shipping){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user ==null){
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iShippingService.update(user.getId(),shipping);
     }
 }
