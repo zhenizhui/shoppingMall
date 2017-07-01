@@ -13,4 +13,6 @@ public interface IShippingService {
     ServerResponse<String> del(Integer userId,Integer shippingId);
 
     ServerResponse update(Integer userId, Shipping shipping);
+
+    ServerResponse<Shipping> query(Integer userId, Integer shippingId);
 }
