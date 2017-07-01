@@ -1,5 +1,6 @@
 package com.shoppingmall.service;
 
+import com.github.pagehelper.PageInfo;
 import com.shoppingmall.common.ServerResponse;
 import com.shoppingmall.pojo.Shipping;
 
@@ -15,4 +16,6 @@ public interface IShippingService {
     ServerResponse update(Integer userId, Shipping shipping);
 
     ServerResponse<Shipping> query(Integer userId, Integer shippingId);
+
+    ServerResponse<PageInfo> list(Integer userId, int pageNum, int pageSize);
 }

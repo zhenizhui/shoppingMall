@@ -1,5 +1,6 @@
 package com.shoppingmall.controller.portal;
 
+import com.github.pagehelper.PageInfo;
 import com.shoppingmall.common.Const;
 import com.shoppingmall.common.ResponseCode;
 import com.shoppingmall.common.ServerResponse;
@@ -9,6 +10,7 @@ import com.shoppingmall.service.IShippingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
@@ -74,6 +76,12 @@ public class ShippingController {
         return iShippingService.update(user.getId(),shipping);
     }
 
+    /**
+     * 查询收货地址
+     * @param session
+     * @param shippingId
+     * @return
+     */
     @RequestMapping("query.do")
     @ResponseBody
     public ServerResponse<Shipping> query(HttpSession session,Integer shippingId){
@@ -82,5 +90,24 @@ public class ShippingController {
             return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
         }
         return iShippingService.query(user.getId(),shippingId);
+    }
+
+    /**
+     * 分页接口
+     * @param pageNum
+     * @param pageSize
+     * @param session
+     * @return
+     */
+    @RequestMapping("list.do")
+    @ResponseBody
+    public ServerResponse<PageInfo> list(@RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
+                                         @RequestParam(value = "pageSize",defaultValue = "10")int pageSize,
+                                         HttpSession session){
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user ==null){
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return iShippingService.list(user.getId(),pageNum,pageSize);
     }
 }
