@@ -74,7 +74,7 @@ public class CartController {
     }
 
     /**
-     * 展示购物中所有的商品
+     * 展示购物车中所有的商品
      * @param session
      * @return
      */

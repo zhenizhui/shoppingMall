@@ -145,6 +145,12 @@ public class UserController {
         return iUserService.resetPasswordWhenHasLogined(passwordOld, paasswordNew, user);
     }
 
+    /**
+     * 更新用户信息
+     * @param session
+     * @param user
+     * @return
+     */
     @RequestMapping(value = "update_user_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> updateUserInfo(HttpSession session, User user) {
@@ -161,6 +167,11 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 获取用户信息
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session) {
