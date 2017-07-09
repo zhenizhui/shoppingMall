@@ -1,6 +1,7 @@
 package com.shoppingmall.service.impl;
 
 import com.shoppingmall.service.IFileService;
+import com.shoppingmall.utils.QiNiuUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class FileServiceImpl implements IFileService {
             //文件已经上传成功了
 
             // TODO: 上传到ftp服务器或者七牛服务器
+            new QiNiuUtil().upload(targetFile);
 
             // 现在上传成功之后。图片会在/target/shoppingmall/upload/下面
 

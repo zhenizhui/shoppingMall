@@ -159,7 +159,7 @@ public class ProductManageController {
         if(iUserService.checkAdminRole(user).isSuccess()){
             String path = request.getSession().getServletContext().getRealPath("upload");
             String targetFileName = iFileService.upload(file,path);
-            String url = PropertiesUtil.getProperty("ftp.server.http.prefix")+targetFileName;
+            String url = PropertiesUtil.getProperty("QiNiu_Bind_Domain_Name")+targetFileName;
 
             Map fileMap = Maps.newHashMap();
             fileMap.put("uri",targetFileName);
