@@ -153,10 +153,10 @@
         status = #{status,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        now(),
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        now(),
+        update_time = now(),
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
