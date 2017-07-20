@@ -177,4 +177,12 @@
     </foreach>
   </insert>
 
+  <select id="getByOrderNoUserId" parameterType="map" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from mmall_order_item
+    where order_no = #{orderNo}
+    and user_id = #{userId}
+  </select>
+
 </mapper>
