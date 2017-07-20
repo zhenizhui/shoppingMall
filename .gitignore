@@ -32,3 +32,9 @@ target/
 # system ignore
 .DS_Store
 Thumbs.db
+
+# AliPay config
+zfbinfo.properties
+
+# this project config
+mmall.properties
