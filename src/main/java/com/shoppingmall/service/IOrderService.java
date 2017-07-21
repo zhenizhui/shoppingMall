@@ -17,4 +17,5 @@ public interface IOrderService {
     ServerResponse queryOrderPayStatus(Integer userId,Long orderNo);
     ServerResponse<PageInfo> getOrderList(Integer userId, int pageNum, int pageSize);
     ServerResponse<OrderVo> getOrderDetail(Integer userId, Long orderNo);
+    ServerResponse getOrderCartProduct(Integer userId);
 }

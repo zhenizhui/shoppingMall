@@ -24,6 +24,7 @@ import com.shoppingmall.utils.DateTimeUtil;
 import com.shoppingmall.utils.PropertiesUtil;
 import com.shoppingmall.utils.QiNiuUtil;
 import com.shoppingmall.vo.OrderItemVo;
+import com.shoppingmall.vo.OrderProductVo;
 import com.shoppingmall.vo.OrderVo;
 import com.shoppingmall.vo.ShippingVo;
 import org.apache.commons.collections.CollectionUtils;
@@ -476,6 +477,30 @@ public class OrderServiceImpl implements IOrderService {
             return ServerResponse.createBySuccess(orderVo);
         }
         return  ServerResponse.createByErrorMessage("没有找到该订单");
+    }
+
+    public ServerResponse getOrderCartProduct(Integer userId){
+        OrderProductVo orderProductVo = new OrderProductVo();
+        //从购物车中获取数据
+
+        List<Cart> cartList = cartMapper.selectCheckedCartByUserId(userId);
+        ServerResponse serverResponse =  this.getCartOrderItem(userId,cartList);
+        if(!serverResponse.isSuccess()){
+            return serverResponse;
+        }
+        List<OrderItem> orderItemList =( List<OrderItem> ) serverResponse.getData();
+
+        List<OrderItemVo> orderItemVoList = Lists.newArrayList();
+
+        BigDecimal payment = new BigDecimal("0");
+        for(OrderItem orderItem : orderItemList){
+            payment = BigDecimalUtil.add(payment.doubleValue(),orderItem.getTotalPrice().doubleValue());
+            orderItemVoList.add(assembleOrderItemVo(orderItem));
+        }
+        orderProductVo.setProductTotalPrice(payment);
+        orderProductVo.setOrderItemVoList(orderItemVoList);
+        orderProductVo.setImageHost(PropertiesUtil.getProperty("ftp.server.http.prefix"));
+        return ServerResponse.createBySuccess(orderProductVo);
     }
 
 }
