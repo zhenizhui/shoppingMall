@@ -2,6 +2,7 @@ package com.shoppingmall.service;
 
 import com.github.pagehelper.PageInfo;
 import com.shoppingmall.common.ServerResponse;
+import com.shoppingmall.vo.OrderVo;
 
 import java.util.Map;
 
@@ -15,4 +16,5 @@ public interface IOrderService {
     ServerResponse aliCallback(Map<String,String> params);
     ServerResponse queryOrderPayStatus(Integer userId,Long orderNo);
     ServerResponse<PageInfo> getOrderList(Integer userId, int pageNum, int pageSize);
+    ServerResponse<OrderVo> getOrderDetail(Integer userId, Long orderNo);
 }

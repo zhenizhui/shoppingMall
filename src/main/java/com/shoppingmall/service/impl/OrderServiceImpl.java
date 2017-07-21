@@ -467,4 +467,15 @@ public class OrderServiceImpl implements IOrderService {
         }
         return orderVoList;
     }
+
+    public ServerResponse<OrderVo> getOrderDetail(Integer userId,Long orderNo){
+        Order order = orderMapper.selectByUserIdAndOrderNo(userId,orderNo);
+        if(order != null){
+            List<OrderItem> orderItemList = orderItemMapper.getByOrderNoUserId(orderNo,userId);
+            OrderVo orderVo = assembleOrderVo(order,orderItemList);
+            return ServerResponse.createBySuccess(orderVo);
+        }
+        return  ServerResponse.createByErrorMessage("没有找到该订单");
+    }
+
 }
