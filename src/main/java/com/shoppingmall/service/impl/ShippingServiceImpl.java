@@ -66,4 +66,12 @@ public class ShippingServiceImpl implements IShippingService{
         PageInfo pageInfo = new PageInfo(shippingList);
         return ServerResponse.createBySuccess(pageInfo);
     }
+
+    public ServerResponse<Shipping> select(Integer userId, Integer shippingId){
+        Shipping shipping = shippingMapper.selectByShippingIdUserId(userId,shippingId);
+        if(shipping == null){
+            return ServerResponse.createByErrorMessage("无法查询到该地址");
+        }
+        return ServerResponse.createBySuccess("更新地址成功",shipping);
+    }
 }
