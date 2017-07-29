@@ -28,7 +28,7 @@ public class UserServiceImpl implements IUserService{
     @Override
     public ServerResponse<User> login(String username, String password) {
         // 检查登陆的用户名是否存在
-        int resultCount = userMapper.checkUsername(username);
+        int resultCount = userMapper.checkUserName(username);
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("用户名不存在");
         }
@@ -74,13 +74,13 @@ public class UserServiceImpl implements IUserService{
         if (isNotBlank(type)) {
             // 开始校验
             if (Const.USERNAME.equals(type)) {
-                int resultCount = userMapper.checkUsername(str);
+                int resultCount = userMapper.checkUserName(str);
                 if (resultCount > 0) {
                     return ServerResponse.createByErrorMessage("用户名已经存在");
                 }
             }
             if (Const.EMAIL.equals(type)) {
-                int resultCount = userMapper.checkUsername(str);
+                int resultCount = userMapper.checkUserName(str);
                 if (resultCount > 0) {
                     return ServerResponse.createByErrorMessage("邮箱已经存在");
                 }
@@ -114,6 +114,22 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createBySuccess(forgetToken);
         }
         return ServerResponse.createByErrorMessage("问题答案错误");
+    }
+
+    public ServerResponse<String> checkUserName(String userName) {
+        int resultCount = userMapper.checkUserName(userName);
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("用户名已经存在");
+        }
+        return ServerResponse.createBySuccessMessage("该用户名可以使用");
+    }
+
+    public ServerResponse<String> checkUserEmail(String email) {
+        int resultCount = userMapper.checkEmail(email);
+        if (resultCount > 0) {
+            return ServerResponse.createByErrorMessage("邮箱已经被使用");
+        }
+        return ServerResponse.createBySuccessMessage("改邮箱可以使用");
     }
 
     public ServerResponse<String> resetPassword(String userName, String passwordNew, String forgetToken) {

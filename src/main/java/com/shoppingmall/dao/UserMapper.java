@@ -16,7 +16,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    int checkUsername(String username);
+    int checkUserName(String username);
 
     int checkEmail(String email);
 

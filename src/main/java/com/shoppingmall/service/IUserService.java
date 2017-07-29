@@ -14,6 +14,10 @@ public interface IUserService {
 
     ServerResponse<String> checkValid(String str, String type);
 
+    ServerResponse<String> checkUserName(String userName);
+
+    ServerResponse<String> checkUserEmail(String email);
+
     ServerResponse selectQuestion(String userName);
 
     ServerResponse<String> checkAnswer(String userName, String question, String answer);

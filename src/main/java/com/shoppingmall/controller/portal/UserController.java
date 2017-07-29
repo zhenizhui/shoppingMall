@@ -24,6 +24,7 @@ public class UserController {
 
     /**
      * 用户登录
+     *
      * @param username
      * @param password
      * @param session
@@ -31,10 +32,10 @@ public class UserController {
      */
     @RequestMapping(value = "login.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> login(String username, String password, HttpSession session){
+    public ServerResponse<User> login(String username, String password, HttpSession session) {
         ServerResponse<User> response = iUserService.login(username, password);
 
-        if(response.isSuccess()) {
+        if (response.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
 
@@ -43,6 +44,7 @@ public class UserController {
 
     /**
      * 用户登出
+     *
      * @param session
      * @return
      */
@@ -55,6 +57,7 @@ public class UserController {
 
     /**
      * 用户注册
+     *
      * @param user
      * @return
      */
@@ -65,7 +68,32 @@ public class UserController {
     }
 
     /**
+     * 检查填写的用户名是否有效
+     *
+     * @param userName
+     * @return
+     */
+    @RequestMapping(value = "check_user_name.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> checkUserName(String userName) {
+        return iUserService.checkUserName(userName);
+    }
+
+    /**
+     * 检查填写的邮箱是否有效
+     *
+     * @param email
+     * @return
+     */
+    @RequestMapping(value = "check_user_email.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<String> checkUserEmail(String email) {
+        return iUserService.checkUserEmail(email);
+    }
+
+    /**
      * 用户名和邮箱校验
+     *
      * @param str
      * @param type
      * @return
@@ -78,13 +106,14 @@ public class UserController {
 
     /**
      * 获取用户登录信息
+     *
      * @param session
      * @return
      */
     @RequestMapping(value = "get_user_logined_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserLoginedInfo(HttpSession session) {
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user != null) {
             ServerResponse.createBySuccess(user);
         }
@@ -93,6 +122,7 @@ public class UserController {
 
     /**
      * 密码提示问题的获取
+     *
      * @param userName
      * @return
      */
@@ -104,6 +134,7 @@ public class UserController {
 
     /**
      * 校验问题的答案是否正确
+     *
      * @param userName
      * @param question
      * @param answer
@@ -117,6 +148,7 @@ public class UserController {
 
     /**
      * 重置密码
+     *
      * @param userName
      * @param passwordNew
      * @param forgetToken
@@ -130,6 +162,7 @@ public class UserController {
 
     /**
      * 登陆状态下重置密码
+     *
      * @param session
      * @param passwordOld
      * @param paasswordNew
@@ -138,7 +171,7 @@ public class UserController {
     @RequestMapping(value = "reset_password_when_has_login.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> resetPasswordWhenHasLogined(HttpSession session, String passwordOld, String paasswordNew) {
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
@@ -147,6 +180,7 @@ public class UserController {
 
     /**
      * 更新用户信息
+     *
      * @param session
      * @param user
      * @return
@@ -154,7 +188,7 @@ public class UserController {
     @RequestMapping(value = "update_user_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> updateUserInfo(HttpSession session, User user) {
-        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if (currentUser == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
@@ -169,48 +203,50 @@ public class UserController {
 
     /**
      * 获取用户信息
+     *
      * @param session
      * @return
      */
     @RequestMapping(value = "get_user_info.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session) {
-        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if (currentUser == null) {
             return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(), "hello");
         }
         return iUserService.getUserInfo(currentUser.getId());
     }
 
-    @RequestMapping(value = "get_information.do",method = RequestMethod.POST)
+    @RequestMapping(value = "get_information.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> get_information(HttpSession session){
-        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
-        if(currentUser == null){
-            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),"未登录,需要强制登录status=10");
+    public ServerResponse<User> get_information(HttpSession session) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null) {
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(), "未登录,需要强制登录status=10");
         }
         return iUserService.getInformation(currentUser.getId());
     }
 
     /**
      * 更新个人信息
+     *
      * @param session
      * @param user
      * @return
      */
-    @RequestMapping(value = "update_information.do",method = RequestMethod.POST)
+    @RequestMapping(value = "update_information.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User> update_information(HttpSession session,User user){
-        User currentUser = (User)session.getAttribute(Const.CURRENT_USER);
-        if(currentUser == null){
+    public ServerResponse<User> update_information(HttpSession session, User user) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
         user.setId(currentUser.getId());
         user.setUsername(currentUser.getUsername());
         ServerResponse<User> response = iUserService.updateInformation(user);
-        if(response.isSuccess()){
+        if (response.isSuccess()) {
             response.getData().setUsername(currentUser.getUsername());
-            session.setAttribute(Const.CURRENT_USER,response.getData());
+            session.setAttribute(Const.CURRENT_USER, response.getData());
         }
         return response;
     }
