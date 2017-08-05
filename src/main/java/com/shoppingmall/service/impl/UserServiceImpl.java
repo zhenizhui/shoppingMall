@@ -1,18 +1,19 @@
 package com.shoppingmall.service.impl;
 
 import com.shoppingmall.common.Const;
-import com.shoppingmall.common.ResponseCode;
 import com.shoppingmall.common.ServerResponse;
 import com.shoppingmall.common.TokenCache;
 import com.shoppingmall.dao.UserMapper;
 import com.shoppingmall.pojo.User;
 import com.shoppingmall.service.IUserService;
 import com.shoppingmall.utils.MD5Util;
-import com.sun.corba.se.spi.activation.Server;
+import com.shoppingmall.utils.VerificationCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -244,5 +245,10 @@ public class UserServiceImpl implements IUserService{
             return ServerResponse.createBySuccess("更新个人信息成功",updateUser);
         }
         return ServerResponse.createByErrorMessage("更新个人信息失败");
+    }
+
+    @Override
+    public void getVerificationCode(HttpServletRequest req, HttpServletResponse resp) {
+        VerificationCode.getCode(req, resp);
     }
 }

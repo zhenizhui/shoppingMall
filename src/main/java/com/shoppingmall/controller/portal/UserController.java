@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 /**
  * Created by zhenizhui on 2017/6/5.
@@ -63,7 +66,19 @@ public class UserController {
      */
     @RequestMapping(value = "register.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> register(User user) {
+    public ServerResponse<String> register(User user, HttpSession session, String code) {
+        long currentTimeStamp = new Date().getTime();
+        long codeTimeStamp = Long.parseLong(session.getAttribute("captchaTime").toString());
+        boolean codeIsRight = code.equalsIgnoreCase(session.getAttribute("captcha").toString());
+        // 验证码有效期为一分钟
+        boolean timeIsValid = (currentTimeStamp - codeTimeStamp) > 60000 ? false : true;
+        if(!codeIsRight){
+            return ServerResponse.createByErrorMessage("验证码不正确");
+        }
+
+        if (!timeIsValid) {
+            return ServerResponse.createByErrorMessage("验证码已经过期");
+        }
         return iUserService.register(user);
     }
 
@@ -251,4 +266,14 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 注册的时候，获取验证码
+     * @param req
+     * @param resp
+     */
+    @RequestMapping(value = "get_register_code.do", method = RequestMethod.GET)
+    @ResponseBody
+    public void getVerificationCode(HttpServletRequest req, HttpServletResponse resp) {
+        iUserService.getVerificationCode(req, resp);
+    }
 }

@@ -1,8 +1,9 @@
 package com.shoppingmall.service;
 
-
 import com.shoppingmall.common.ServerResponse;
 import com.shoppingmall.pojo.User;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by zhenizhui on 2017/6/5.
@@ -35,4 +36,6 @@ public interface IUserService {
     ServerResponse<User> getInformation(Integer userId);
 
     ServerResponse<User> updateInformation(User user);
+
+    void getVerificationCode(HttpServletRequest req, HttpServletResponse resp);
 }
