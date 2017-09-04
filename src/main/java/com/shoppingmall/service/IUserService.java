@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by zhenizhui on 2017/6/5.
  */
 public interface IUserService {
-    ServerResponse<User> login(String name, String password);
+    ServerResponse<User> login(String username, String password);
 
     ServerResponse<String> register(User user);
 

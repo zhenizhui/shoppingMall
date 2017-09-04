@@ -35,8 +35,9 @@ public class UserServiceImpl implements IUserService{
         }
 
         //MD5密码登陆
+        System.out.println("登陸的密碼"+password);
         String md5Password = MD5Util.MD5EncodeUtf8(password);
-
+        System.out.println("加密后的密碼"+MD5Util.MD5EncodeUtf8(password));
         User user = userMapper.selectLogin(username, md5Password);
         if (user == null) {
             return ServerResponse.createByErrorMessage("密码错误");
@@ -167,7 +168,10 @@ public class UserServiceImpl implements IUserService{
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("旧密码错误");
         }
+        System.out.println("旧密码"+passwordOld);
+        System.out.println("新密码"+passwordNew);
         user.setPassword(MD5Util.MD5EncodeUtf8(passwordNew));
+        System.out.println("新密码加密"+MD5Util.MD5EncodeUtf8(passwordNew));
         int updateCount = userMapper.updateByPrimaryKeySelective(user);
         if (updateCount > 0) {
             return ServerResponse.createBySuccessMessage("密码更改成功");

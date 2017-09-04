@@ -180,17 +180,17 @@ public class UserController {
      *
      * @param session
      * @param passwordOld
-     * @param paasswordNew
+     * @param passwordNew
      * @return
      */
     @RequestMapping(value = "reset_password_when_has_login.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<String> resetPasswordWhenHasLogined(HttpSession session, String passwordOld, String paasswordNew) {
+    public ServerResponse<String> resetPasswordWhenHasLogined(HttpSession session, String passwordOld, String passwordNew) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        return iUserService.resetPasswordWhenHasLogined(passwordOld, paasswordNew, user);
+        return iUserService.resetPasswordWhenHasLogined(passwordOld, passwordNew, user);
     }
 
     /**

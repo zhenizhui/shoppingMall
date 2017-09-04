@@ -11,6 +11,7 @@ import com.shoppingmall.pojo.Cart;
 import com.shoppingmall.pojo.Product;
 import com.shoppingmall.service.ICartService;
 import com.shoppingmall.utils.BigDecimalUtil;
+import com.shoppingmall.utils.PropertiesUtil;
 import com.shoppingmall.vo.CartProductVo;
 import com.shoppingmall.vo.CartVo;
 import org.apache.commons.collections.CollectionUtils;
@@ -77,7 +78,7 @@ public class CartServiceImpl implements ICartService{
 
                 Product product = productMapper.selectByPrimaryKey(cartItem.getProductId());
                 if(product != null){
-                    cartProductVo.setProductMainImage(product.getMainImage());
+                    cartProductVo.setProductMainImage(PropertiesUtil.getProperty("QiNiu_Bind_Domain_Name") + product.getMainImage());
                     cartProductVo.setProductName(product.getName());
                     cartProductVo.setProductSubtitle(product.getSubtitle());
                     cartProductVo.setProductStatus(product.getStatus());

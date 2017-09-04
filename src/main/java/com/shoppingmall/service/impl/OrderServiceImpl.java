@@ -227,7 +227,7 @@ public class OrderServiceImpl implements IOrderService {
         orderItemVo.setOrderNo(orderItem.getOrderNo());
         orderItemVo.setProductId(orderItem.getProductId());
         orderItemVo.setProductName(orderItem.getProductName());
-        orderItemVo.setProductImage(orderItem.getProductImage());
+        orderItemVo.setProductImage(PropertiesUtil.getProperty("QiNiu_Bind_Domain_Name") + orderItem.getProductImage());
         orderItemVo.setCurrentUnitPrice(orderItem.getCurrentUnitPrice());
         orderItemVo.setQuantity(orderItem.getQuantity());
         orderItemVo.setTotalPrice(orderItem.getTotalPrice());
